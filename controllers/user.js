@@ -3,6 +3,8 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
 const validateUserInput = (req) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   if (!req.body) {
     return {code: 500, error: "nobody should pass with no body ...." }
   }
@@ -14,6 +16,9 @@ const validateUserInput = (req) => {
   }
   if (req.body.email.length<5) {
     return {code: 403, error: "email too short" }
+  }
+  if (!(emailRegex.test(req.body.email))) {
+    return {code: 403, error: "wrong format of email"}
   }
   if (req.body.password.length<4) {
     return {code: 403, error: "password too short" }
