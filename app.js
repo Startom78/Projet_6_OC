@@ -1,11 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const helmet = require('helmet');
 require('dotenv').config({path: '.env'});
 mongoose.connect(`mongodb+srv://${process.env.MONGOOSE_HOST}.mongodb.net/?retryWrites=true&w=majority`)
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 const app = express();
+/*app.use(helmet({
+  crossOriginResourcePolicy: false
+})); */
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
